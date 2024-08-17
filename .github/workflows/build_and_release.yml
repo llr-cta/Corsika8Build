@@ -30,3 +30,27 @@ jobs:
         sudo apt update -y
         sudo apt install -y -V libarrow-dev libparquet-dev
 
+  - name Install Cubic Interpolation
+    shell: bash
+    run: |
+      wget https://github.com/tudo-astroparticlephysics/cubic_interpolation/archive/refs/tags/v0.1.5.tar.gz
+      tar zxf cubic_interpolation-0.1.5.tar.gz
+      cd cubic_interpolation
+      mkdir build
+      cd build
+      cmake .. -DCMAKE_BUILD_TYPE=Release
+      make -j4
+      make install
+
+  - name Install PROPOSAL
+    shell: bash
+    run: |
+      wget https://github.com/tudo-astroparticlephysics/PROPOSAL/archive/refs/tags/7.6.2.tar.gz
+      tar zxf PROPOSAL-7.6.2.tar.gz
+      cd PROPOSAL
+      mkdir build
+      cd build
+      cmake .. -DCMAKE_BUILD_TYPE=Release
+      make -j4
+      make install
+
