@@ -56,12 +56,13 @@ jobs:
         make -j4
         sudo make install
 
-    - name: Install CORSIKA 8
+    - name: Install Corsika 8
       shell: bash
       run: |
         git clone --recursive https://gitlab.iap.kit.edu/AirShowerPhysics/corsika.git
         mkdir corsika/build
         cd corsika/build
-        cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_PREFIX=/usr ..
+        cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_PREFIX=/usr \
+          -DPROPOSAL_INCLUDE_DIR=/usrl/include ..
         make -j4
         sudo make install
