@@ -40,7 +40,7 @@ jobs:
         cd build
         cmake .. -DCMAKE_BUILD_TYPE=Release
         make -j4
-        make install
+        sudo make install
 
     - name: Install PROPOSAL
       shell: bash
@@ -52,5 +52,5 @@ jobs:
         cd build
         cmake .. -DCMAKE_BUILD_TYPE=Release
         make -j4
-        make install
+        sudo make install
 
