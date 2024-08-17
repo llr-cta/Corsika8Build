@@ -46,7 +46,7 @@ jobs:
       shell: bash
       run: |
         wget https://github.com/tudo-astroparticlephysics/PROPOSAL/archive/refs/tags/7.6.2.tar.gz
-        tar zxf v7.6.2.tar.gz
+        tar zxf 7.6.2.tar.gz
         cd PROPOSAL-7.6.2
         mkdir build
         cd build
