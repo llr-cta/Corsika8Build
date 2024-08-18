@@ -7,7 +7,6 @@ on:
     branches: [ main ]
 
 jobs:
-  continue-on-error: true
   build:
     strategy:
       fail-fast: false
@@ -62,6 +61,7 @@ jobs:
         sudo make install
 
     - name: Install Corsika 8
+      continue-on-error: true
       shell: bash
       run: |
         git clone --recursive https://gitlab.iap.kit.edu/AirShowerPhysics/corsika.git
