@@ -68,7 +68,7 @@ jobs:
         mkdir corsika/build
         cd corsika/build
         cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_PREFIX=/usr \
-          -DPROPOSAL_INCLUDE_DIR=/usrl/include ..
+          -DPROPOSAL_INCLUDE_DIR=/usr/include ..
         make -j4
         sudo make install
 
