@@ -7,10 +7,10 @@ on:
     branches: [ main ]
 
 jobs:
+  continue-on-error: true
   build:
     strategy:
       fail-fast: false
-      continue-on-error: true
       matrix:
         os: [ ubuntu-22.04 ]
 
