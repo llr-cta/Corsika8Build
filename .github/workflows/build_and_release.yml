@@ -10,7 +10,7 @@ jobs:
   build:
     strategy:
       fail-fast: false
-      continue-on-error: true # temporary
+      continue-on-error: true
       matrix:
         os: [ ubuntu-22.04 ]
 
