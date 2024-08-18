@@ -10,6 +10,7 @@ jobs:
   build:
     strategy:
       fail-fast: false
+      continue-on-error: true # temporary
       matrix:
         os: [ ubuntu-22.04 ]
 
@@ -29,6 +30,10 @@ jobs:
         sudo apt install -y ./apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb
         sudo apt update -y
         sudo apt install -y -V libarrow-dev libparquet-dev
+
+    - name: Build pre-installation file list
+      shell: bash
+      run: sudo find /usr -print > filelist_before.txt
 
     - name: Install Cubic Interpolation
       shell: bash
@@ -66,3 +71,23 @@ jobs:
           -DPROPOSAL_INCLUDE_DIR=/usrl/include ..
         make -j4
         sudo make install
+
+    - name: Build post-installation file list
+      shell: bash
+      run: sudo find /usr -print > filelist_after.txt
+
+    - name: Package Corsika 8 in TGZ file
+      shell: bash
+      run: |
+        cat filelist_before.txt filelist_after.txt | sort | uniq -u > filelist_diff.txt
+        tar -zcvf corsika8_installed.tgz -C / -T filelist_diff.txt
+        ls -l corsika8_installed.tgz
+
+    - uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "${{ matrix.os }}"
+        prerelease: true
+        title: "Build of Corsika8 on ${{ matrix.os }}"
+        files: |
+          corsika8_installed.tgz
