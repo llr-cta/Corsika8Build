@@ -91,7 +91,7 @@ jobs:
         tar -zcvf corsika8_installed.tgz -C / -T filelist_diff.txt
         ls -l corsika8_installed.tgz
 
-    - uses: actions/upload-artifact@latest
+    - uses: actions/upload-artifact@v4
       with:
         name: Filelist
         path: filelist_after.txt
