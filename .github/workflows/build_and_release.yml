@@ -59,6 +59,8 @@ jobs:
           -DCMAKE_INSTALL_PREFIX=/usr
         make -j4
         sudo make install
+        sudo sed -i -e '/PROPOSAL_INCLUDE_DIR/s/\/include/\/usr\/include/' /usr/lib/x86_64-linux-gnu/cmake/PROPOSAL/PROPOSALConfig.cmake
+        sudo sed -i -e '/PROPOSAL_LIBRARIES/s/\/lib/\/usr\/lib/' /usr/lib/x86_64-linux-gnu/cmake/PROPOSAL/PROPOSALConfig.cmake
 
     - name: Install Corsika 8
       continue-on-error: true
