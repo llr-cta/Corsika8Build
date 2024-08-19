@@ -12,6 +12,10 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-22.04 ]
+        fmt_version: [ 10.2.1 ]
+        spdlog_version: [ 1.11.0 ]
+        cubic_version: [ 0.1.5 ]
+        proposal_version: [ 7.6.2 ]
 
     runs-on: ${{ matrix.os }}
 
@@ -23,7 +27,7 @@ jobs:
       run: |
         sudo apt-get update -y
         sudo apt-get install -y python3 python3-pip cmake g++ gfortran git doxygen graphviz \
-            libboost-all-dev libcli11-dev libeigen3-dev libspdlog-dev libyaml-cpp-dev \
+            libboost-all-dev libcli11-dev libeigen3-dev libyaml-cpp-dev \
             libre2-dev libzstd-dev liblz4-dev catch2 zlib1g-dev libprotobuf-dev \
             nlohmann-json3-dev ca-certificates lsb-release wget
         wget https://apache.jfrog.io/artifactory/arrow/$(lsb_release --id --short | tr 'A-Z' 'a-z')/apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb
@@ -36,12 +40,29 @@ jobs:
       shell: bash
       run: sudo find /usr -print > filelist_before.txt
 
-    - name: Install FMT library
+    - name: Install fmt library
       shell: bash
       run: |
-        wget https://github.com/fmtlib/fmt/archive/refs/tags/10.2.1.tar.gz
-        tar zxf 10.2.1.tar.gz
-        cd fmt-10.2.1
+        mkdir fmt
+        cd fmt
+        wget https://github.com/fmtlib/fmt/archive/refs/tags/${{ matrix.fmt_version }}.tar.gz
+        tar zxf ${{ matrix.fmt_version }}.tar.gz
+        cd fmt-${{ matrix.fmt_version }}
+        mkdir build
+        cd build
+        cmake .. -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_INSTALL_PREFIX=/usr
+        make -j4
+        sudo make install
+
+    - name: Install spdlog library
+      shell: bash
+      run: |
+        mkdir spdlog
+        cd spdlog
+        wget https://github.com/gabime/spdlog/archive/refs/tags/v${{ matrix.spdlog_version }}.tar.gz
+        tar zxf v${{ matrix.spdlog_version }}.tar.gz
+        cd fmt-v${{ matrix.spdlog_version }}
         mkdir build
         cd build
         cmake .. -DCMAKE_BUILD_TYPE=Release \
@@ -52,9 +73,11 @@ jobs:
     - name: Install Cubic Interpolation
       shell: bash
       run: |
-        wget https://github.com/tudo-astroparticlephysics/cubic_interpolation/archive/refs/tags/v0.1.5.tar.gz
-        tar zxf v0.1.5.tar.gz
-        cd cubic_interpolation-0.1.5
+        mkdir cubic_interpolation
+        cd cubic_interpolation
+        wget https://github.com/tudo-astroparticlephysics/cubic_interpolation/archive/refs/tags/v${{ matrix.cubic_version }}.tar.gz
+        tar zxf v${{ matrix.cubic_version }}.tar.gz
+        cd cubic_interpolation-${{ matrix.cubic_version }}
         mkdir build
         cd build
         cmake .. -DCMAKE_BUILD_TYPE=Release \
@@ -65,9 +88,11 @@ jobs:
     - name: Install PROPOSAL
       shell: bash
       run: |
-        wget https://github.com/tudo-astroparticlephysics/PROPOSAL/archive/refs/tags/7.6.2.tar.gz
-        tar zxf 7.6.2.tar.gz
-        cd PROPOSAL-7.6.2
+        mkdir proposal
+        cd proposal
+        wget https://github.com/tudo-astroparticlephysics/PROPOSAL/archive/refs/tags/${{ matrix.proposal_version }}.tar.gz
+        tar zxf ${{ matrix.proposal_version }}.tar.gz
+        cd PROPOSAL-${{ matrix.proposal_version }}
         mkdir build
         cd build
         cmake .. -DCMAKE_BUILD_TYPE=Release \
