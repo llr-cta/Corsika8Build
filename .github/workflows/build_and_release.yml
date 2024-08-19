@@ -39,9 +39,9 @@ jobs:
     - name: Install FMT library
       shell: bash
       run: |
-        wget https://github.com/fmtlib/fmt/archive/refs/tags/11.0.2.tar.gz
-        tar zxf 11.0.2.tar.gz
-        cd fmt-11.0.2
+        wget https://github.com/fmtlib/fmt/archive/refs/tags/10.2.1.tar.gz
+        tar zxf 10.2.1.tar.gz
+        cd fmt-10.2.1
         mkdir build
         cd build
         cmake .. -DCMAKE_BUILD_TYPE=Release \
