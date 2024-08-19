@@ -7,10 +7,10 @@ on:
     branches: [ main ]
 
 env:
-  fmt_version: [ 10.2.1 ]
-  spdlog_version: [ 1.14.1 ]
-  cubic_version: [ 0.1.5 ]
-  proposal_version: [ 7.6.2 ]
+  fmt_version: 10.2.1
+  spdlog_version: 1.14.1
+  cubic_version: 0.1.5
+  proposal_version: 7.6.2
 
 jobs:
   build:
