@@ -62,7 +62,7 @@ jobs:
         cd spdlog
         wget https://github.com/gabime/spdlog/archive/refs/tags/v${{ matrix.spdlog_version }}.tar.gz
         tar zxf v${{ matrix.spdlog_version }}.tar.gz
-        cd fmt-v${{ matrix.spdlog_version }}
+        cd spdlog-v${{ matrix.spdlog_version }}
         mkdir build
         cd build
         cmake .. -DCMAKE_BUILD_TYPE=Release \
