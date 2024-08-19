@@ -6,17 +6,18 @@ on:
   pull_request:
     branches: [ main ]
 
+env:
+  fmt_version: [ 10.2.1 ]
+  spdlog_version: [ 1.11.0 ]
+  cubic_version: [ 0.1.5 ]
+  proposal_version: [ 7.6.2 ]
+
 jobs:
   build:
     strategy:
       fail-fast: false
       matrix:
         os: [ ubuntu-22.04 ]
-        fmt_version: [ 10.2.1 ]
-        spdlog_version: [ 1.11.0 ]
-        cubic_version: [ 0.1.5 ]
-        proposal_version: [ 7.6.2 ]
-
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -45,9 +46,9 @@ jobs:
       run: |
         mkdir fmt
         cd fmt
-        wget https://github.com/fmtlib/fmt/archive/refs/tags/${{ matrix.fmt_version }}.tar.gz
-        tar zxf ${{ matrix.fmt_version }}.tar.gz
-        cd fmt-${{ matrix.fmt_version }}
+        wget https://github.com/fmtlib/fmt/archive/refs/tags/${{ fmt_version }}.tar.gz
+        tar zxf ${{ fmt_version }}.tar.gz
+        cd fmt-${{ fmt_version }}
         mkdir build
         cd build
         cmake .. -DCMAKE_BUILD_TYPE=Release \
@@ -60,9 +61,9 @@ jobs:
       run: |
         mkdir spdlog
         cd spdlog
-        wget https://github.com/gabime/spdlog/archive/refs/tags/v${{ matrix.spdlog_version }}.tar.gz
-        tar zxf v${{ matrix.spdlog_version }}.tar.gz
-        cd spdlog-${{ matrix.spdlog_version }}
+        wget https://github.com/gabime/spdlog/archive/refs/tags/v${{ spdlog_version }}.tar.gz
+        tar zxf v${{ spdlog_version }}.tar.gz
+        cd spdlog-${{ spdlog_version }}
         mkdir build
         cd build
         cmake .. -DCMAKE_BUILD_TYPE=Release \
@@ -75,9 +76,9 @@ jobs:
       run: |
         mkdir cubic_interpolation
         cd cubic_interpolation
-        wget https://github.com/tudo-astroparticlephysics/cubic_interpolation/archive/refs/tags/v${{ matrix.cubic_version }}.tar.gz
-        tar zxf v${{ matrix.cubic_version }}.tar.gz
-        cd cubic_interpolation-${{ matrix.cubic_version }}
+        wget https://github.com/tudo-astroparticlephysics/cubic_interpolation/archive/refs/tags/v${{ cubic_version }}.tar.gz
+        tar zxf v${{ cubic_version }}.tar.gz
+        cd cubic_interpolation-${{ cubic_version }}
         mkdir build
         cd build
         cmake .. -DCMAKE_BUILD_TYPE=Release \
@@ -90,9 +91,9 @@ jobs:
       run: |
         mkdir proposal
         cd proposal
-        wget https://github.com/tudo-astroparticlephysics/PROPOSAL/archive/refs/tags/${{ matrix.proposal_version }}.tar.gz
-        tar zxf ${{ matrix.proposal_version }}.tar.gz
-        cd PROPOSAL-${{ matrix.proposal_version }}
+        wget https://github.com/tudo-astroparticlephysics/PROPOSAL/archive/refs/tags/${{ proposal_version }}.tar.gz
+        tar zxf ${{ proposal_version }}.tar.gz
+        cd PROPOSAL-${{ proposal_version }}
         mkdir build
         cd build
         cmake .. -DCMAKE_BUILD_TYPE=Release \
