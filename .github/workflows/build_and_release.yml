@@ -29,7 +29,8 @@ jobs:
         wget https://apache.jfrog.io/artifactory/arrow/$(lsb_release --id --short | tr 'A-Z' 'a-z')/apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb
         sudo apt install -y ./apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb
         sudo apt update -y
-        sudo apt install -y -V libarrow-dev libparquet-dev
+        sudo apt install -y -V libarrow-dev libarrow-dataset-dev libparquet-dev
+        pip install pyarrow
 
     - name: Build pre-installation file list
       shell: bash
@@ -72,7 +73,7 @@ jobs:
         cd corsika/build
         cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo \
           -DCMAKE_INSTALL_PREFIX=/usr \
-          -DPROPOSAL_INCLUDE_DIR=/usr/include \
+          -DCMAKE_INSTALL_LIBDIR=x86_64-linux-gnu \
           -DCMAKE_PREFIX_PATH=/usr \
           ..
         make -j4
@@ -89,7 +90,7 @@ jobs:
         tar -zcvf corsika8_installed.tgz -C / -T filelist_diff.txt
         ls -l corsika8_installed.tgz
 
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@latest
       with:
         name: Filelist
         path: filelist_after.txt
