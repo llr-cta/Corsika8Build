@@ -70,6 +70,7 @@ jobs:
       run: |
         git clone --recursive https://gitlab.iap.kit.edu/AirShowerPhysics/corsika.git
         sed -i -e 's/yaml-cpp::yaml-cpp/${yaml-cpp_LIBRARY}/' corsika/CMakeLists.txt
+        sed -i -e '/^find_package\(Arrow/s/$/\nfind_package\(Parquet REQUIRED\)/' corsika/CMakeLists.txt
         mkdir corsika/build
         cd corsika/build
         cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo \
