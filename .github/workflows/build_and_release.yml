@@ -46,9 +46,9 @@ jobs:
       run: |
         mkdir fmt
         cd fmt
-        wget https://github.com/fmtlib/fmt/archive/refs/tags/${{ fmt_version }}.tar.gz
-        tar zxf ${{ fmt_version }}.tar.gz
-        cd fmt-${{ fmt_version }}
+        wget https://github.com/fmtlib/fmt/archive/refs/tags/${{ env.fmt_version }}.tar.gz
+        tar zxf ${{ env.fmt_version }}.tar.gz
+        cd fmt-${{ env.fmt_version }}
         mkdir build
         cd build
         cmake .. -DCMAKE_BUILD_TYPE=Release \
@@ -61,9 +61,9 @@ jobs:
       run: |
         mkdir spdlog
         cd spdlog
-        wget https://github.com/gabime/spdlog/archive/refs/tags/v${{ spdlog_version }}.tar.gz
-        tar zxf v${{ spdlog_version }}.tar.gz
-        cd spdlog-${{ spdlog_version }}
+        wget https://github.com/gabime/spdlog/archive/refs/tags/v${{ env.spdlog_version }}.tar.gz
+        tar zxf v${{ env.spdlog_version }}.tar.gz
+        cd spdlog-${{ env.spdlog_version }}
         mkdir build
         cd build
         cmake .. -DCMAKE_BUILD_TYPE=Release \
@@ -76,9 +76,9 @@ jobs:
       run: |
         mkdir cubic_interpolation
         cd cubic_interpolation
-        wget https://github.com/tudo-astroparticlephysics/cubic_interpolation/archive/refs/tags/v${{ cubic_version }}.tar.gz
-        tar zxf v${{ cubic_version }}.tar.gz
-        cd cubic_interpolation-${{ cubic_version }}
+        wget https://github.com/tudo-astroparticlephysics/cubic_interpolation/archive/refs/tags/v${{ env.cubic_version }}.tar.gz
+        tar zxf v${{ env.cubic_version }}.tar.gz
+        cd cubic_interpolation-${{ env.cubic_version }}
         mkdir build
         cd build
         cmake .. -DCMAKE_BUILD_TYPE=Release \
@@ -91,9 +91,9 @@ jobs:
       run: |
         mkdir proposal
         cd proposal
-        wget https://github.com/tudo-astroparticlephysics/PROPOSAL/archive/refs/tags/${{ proposal_version }}.tar.gz
-        tar zxf ${{ proposal_version }}.tar.gz
-        cd PROPOSAL-${{ proposal_version }}
+        wget https://github.com/tudo-astroparticlephysics/PROPOSAL/archive/refs/tags/${{ env.proposal_version }}.tar.gz
+        tar zxf ${{ env.proposal_version }}.tar.gz
+        cd PROPOSAL-${{ env.proposal_version }}
         mkdir build
         cd build
         cmake .. -DCMAKE_BUILD_TYPE=Release \
