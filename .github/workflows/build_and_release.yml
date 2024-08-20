@@ -12,6 +12,7 @@ env:
   cubic_version: 0.1.5
   proposal_version: 7.6.2
   catch2_version: 3.6.0
+  yaml-cpp_version: 0.8.0
 
 jobs:
   build:
@@ -88,6 +89,21 @@ jobs:
         make -j4
         sudo make install
 
+    - name: Install yaml-cpp library
+      shell: bash
+      run: |
+        mkdir yaml-cpp
+        cd yaml-cpp
+        wget https://github.com/jbeder/yaml-cpp/archive/refs/tags/${{ env.yaml-cpp_version }}.tar.gz
+        tar zxf ${{ env.yaml-cpp_version }}.tar.gz
+        cd yaml-cpp-${{ env.yaml-cpp_version }}
+        mkdir build
+        cd build
+        cmake .. -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_INSTALL_PREFIX=/usr
+        make -j4
+        sudo make install
+
     - name: Install Cubic Interpolation
       shell: bash
       run: |
@@ -125,7 +141,6 @@ jobs:
       shell: bash
       run: |
         git clone --recursive https://gitlab.iap.kit.edu/AirShowerPhysics/corsika.git
-        sed -i -e 's/yaml-cpp::yaml-cpp/${yaml-cpp_LIBRARY}/' corsika/CMakeLists.txt
         sed -i -e '/^find_package(Arrow/s/$/\nfind_package(Parquet REQUIRED)/' corsika/CMakeLists.txt
         mkdir corsika/build
         cd corsika/build
