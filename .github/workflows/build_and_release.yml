@@ -136,6 +136,8 @@ jobs:
       run: |
         git clone --recursive https://gitlab.iap.kit.edu/AirShowerPhysics/corsika.git
         sed -i -e '/^find_package(Arrow/s/$/\nfind_package(Parquet REQUIRED)/' corsika/CMakeLists.txt
+        sed -i -e '/^find_package(Boost/s/filesystem/filesystem math_tr1/' corsika/CMakeLists.txt
+        sed -i -e 's/Boost::filesystem/Boost::filesystem Boost::math_tr1/' corsika/CMakeLists.txt        
         mkdir corsika/build
         cd corsika/build
         cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo \
@@ -157,12 +159,13 @@ jobs:
         sudo tar -zpcf corsika8_installed.tgz --ignore-failed-read -C / -T filelist_diff.txt
         ls -l corsika8_installed.tgz
 
-    - uses: actions/upload-artifact@v4
+    - name: Publish file list in artifact
+      uses: actions/upload-artifact@v4
       with:
         name: Filelist
         path: filelist_after.txt
 
-    - name: Release
+    - name: Publish tar file in Github release
       uses: softprops/action-gh-release@v2
       with: 
         files: corsika8_installed.tgz
