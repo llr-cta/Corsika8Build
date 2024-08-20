@@ -130,7 +130,7 @@ jobs:
         sudo sed -i -e '/PROPOSAL_INCLUDE_DIR/s/\/include/\/usr\/include/' /usr/lib/x86_64-linux-gnu/cmake/PROPOSAL/PROPOSALConfig.cmake
         sudo sed -i -e '/PROPOSAL_LIBRARIES/s/\/lib/\/usr\/lib/' /usr/lib/x86_64-linux-gnu/cmake/PROPOSAL/PROPOSALConfig.cmake
 
-    - name: Install Corsika 8
+    - name: Build Corsika 8
       shell: bash
       run: |
         git clone --recursive https://gitlab.iap.kit.edu/AirShowerPhysics/corsika.git
@@ -162,12 +162,12 @@ jobs:
       shell: bash
       run: sudo find /usr -print > filelist_after.txt
 
-    - name: Package Corsika 8 in TGZ file
+    - name: Package Corsika 8 and dependencies in TGZ file
       shell: bash
       run: |
         cat filelist_before.txt filelist_after.txt | sort | uniq -u > filelist_diff.txt
         sudo tar -zpcf corsika8_installed.tgz --ignore-failed-read -C / -T filelist_diff.txt
-        ls -l corsika8_installed.tgz
+        ls -lh corsika8_installed.tgz
 
     - name: Publish TGZ file as Github release
       uses: softprops/action-gh-release@v2
