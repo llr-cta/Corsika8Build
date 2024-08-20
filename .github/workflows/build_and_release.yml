@@ -49,8 +49,7 @@ jobs:
       run: |
         mkdir fmt
         cd fmt
-        wget https://github.com/fmtlib/fmt/archive/refs/tags/${{ env.fmt_version }}.tar.gz
-        tar zxf ${{ env.fmt_version }}.tar.gz
+        wget -qO - https://github.com/fmtlib/fmt/archive/refs/tags/${{ env.fmt_version }}.tar.gz | tar zxf -
         cd fmt-${{ env.fmt_version }}
         mkdir build
         cd build
@@ -58,14 +57,15 @@ jobs:
           -DCMAKE_INSTALL_PREFIX=/usr
         make -j4
         sudo make install
+        cd ../../..
+        rm -rf fmt
 
     - name: Install spdlog library
       shell: bash
       run: |
         mkdir spdlog
         cd spdlog
-        wget https://github.com/gabime/spdlog/archive/refs/tags/v${{ env.spdlog_version }}.tar.gz
-        tar zxf v${{ env.spdlog_version }}.tar.gz
+        wget -qO - https://github.com/gabime/spdlog/archive/refs/tags/v${{ env.spdlog_version }}.tar.gz | tar zxf -
         cd spdlog-${{ env.spdlog_version }}
         mkdir build
         cd build
@@ -73,14 +73,15 @@ jobs:
           -DCMAKE_INSTALL_PREFIX=/usr
         make -j4
         sudo make install
+        cd ../../..
+        rm -rf spdlog
 
     - name: Install Catch2 library
       shell: bash
       run: |
         mkdir Catch2
         cd Catch2
-        wget https://github.com/catchorg/Catch2/archive/refs/tags/v${{ env.catch2_version }}.tar.gz
-        tar zxf v${{ env.catch2_version }}.tar.gz
+        wget -qO - https://github.com/catchorg/Catch2/archive/refs/tags/v${{ env.catch2_version }}.tar.gz | tar zxf -
         cd Catch2-${{ env.catch2_version }}
         mkdir build
         cd build
@@ -88,14 +89,15 @@ jobs:
           -DCMAKE_INSTALL_PREFIX=/usr
         make -j4
         sudo make install
+        cd ../../..
+        rm -rf Catch2
 
     - name: Install yaml-cpp library
       shell: bash
       run: |
         mkdir yaml-cpp
         cd yaml-cpp
-        wget https://github.com/jbeder/yaml-cpp/archive/refs/tags/${{ env.yaml-cpp_version }}.tar.gz
-        tar zxf ${{ env.yaml-cpp_version }}.tar.gz
+        wget -qO - https://github.com/jbeder/yaml-cpp/archive/refs/tags/${{ env.yaml-cpp_version }}.tar.gz | tar zxf -
         cd yaml-cpp-${{ env.yaml-cpp_version }}
         mkdir build
         cd build
@@ -103,14 +105,15 @@ jobs:
           -DCMAKE_INSTALL_PREFIX=/usr
         make -j4
         sudo make install
+        cd ../../..
+        rm -rf yaml-cpp
 
     - name: Install Cubic Interpolation
       shell: bash
       run: |
         mkdir cubic_interpolation
         cd cubic_interpolation
-        wget https://github.com/tudo-astroparticlephysics/cubic_interpolation/archive/refs/tags/v${{ env.cubic_version }}.tar.gz
-        tar zxf v${{ env.cubic_version }}.tar.gz
+        wget -qO - https://github.com/tudo-astroparticlephysics/cubic_interpolation/archive/refs/tags/v${{ env.cubic_version }}.tar.gz | tar zxf -
         cd cubic_interpolation-${{ env.cubic_version }}
         mkdir build
         cd build
@@ -118,14 +121,15 @@ jobs:
           -DCMAKE_INSTALL_PREFIX=/usr
         make -j4
         sudo make install
+        cd ../../..
+        rm -rf cubic_interpolation
 
     - name: Install PROPOSAL
       shell: bash
       run: |
         mkdir proposal
         cd proposal
-        wget https://github.com/tudo-astroparticlephysics/PROPOSAL/archive/refs/tags/${{ env.proposal_version }}.tar.gz
-        tar zxf ${{ env.proposal_version }}.tar.gz
+        wget -qO - https://github.com/tudo-astroparticlephysics/PROPOSAL/archive/refs/tags/${{ env.proposal_version }}.tar.gz | tar zxf -
         cd PROPOSAL-${{ env.proposal_version }}
         mkdir build
         cd build
@@ -135,6 +139,8 @@ jobs:
         sudo make install
         sudo sed -i -e '/PROPOSAL_INCLUDE_DIR/s/\/include/\/usr\/include/' /usr/lib/x86_64-linux-gnu/cmake/PROPOSAL/PROPOSALConfig.cmake
         sudo sed -i -e '/PROPOSAL_LIBRARIES/s/\/lib/\/usr\/lib/' /usr/lib/x86_64-linux-gnu/cmake/PROPOSAL/PROPOSALConfig.cmake
+        cd ../../..
+        rm -rf proposal
 
     - name: Install Corsika 8
       continue-on-error: true
