@@ -21,7 +21,8 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Check out repository
+      uses: actions/checkout@v4
 
     - name: Install prerequisites
       shell: bash
@@ -136,11 +137,10 @@ jobs:
         name: Filelist
         path: filelist_after.txt
 
-    - uses: "marvinpinto/action-automatic-releases@latest"
-      with:
-        repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "${{ matrix.os }}"
+    - name: Release
+      uses: softprops/action-gh-release@v2
+      with: 
+        files: corsika8_installed.tgz
+        name: "Build of CORSIKA 8 on ${{ matrix.os }}"
+        tag_name: "${{ matrix.os }}"
         prerelease: true
-        title: "Build of Corsika8 on ${{ matrix.os }}"
-        files: |
-          corsika8_installed.tgz
