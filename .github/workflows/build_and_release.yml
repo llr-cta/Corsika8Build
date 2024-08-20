@@ -57,8 +57,6 @@ jobs:
           -DCMAKE_INSTALL_PREFIX=/usr
         make -j4
         sudo make install
-        cd ../../..
-        rm -rf fmt
 
     - name: Install spdlog library
       shell: bash
@@ -73,8 +71,6 @@ jobs:
           -DCMAKE_INSTALL_PREFIX=/usr
         make -j4
         sudo make install
-        cd ../../..
-        rm -rf spdlog
 
     - name: Install Catch2 library
       shell: bash
@@ -89,8 +85,6 @@ jobs:
           -DCMAKE_INSTALL_PREFIX=/usr
         make -j4
         sudo make install
-        cd ../../..
-        rm -rf Catch2
 
     - name: Install yaml-cpp library
       shell: bash
@@ -105,8 +99,6 @@ jobs:
           -DCMAKE_INSTALL_PREFIX=/usr
         make -j4
         sudo make install
-        cd ../../..
-        rm -rf yaml-cpp
 
     - name: Install Cubic Interpolation
       shell: bash
@@ -121,8 +113,6 @@ jobs:
           -DCMAKE_INSTALL_PREFIX=/usr
         make -j4
         sudo make install
-        cd ../../..
-        rm -rf cubic_interpolation
 
     - name: Install PROPOSAL
       shell: bash
@@ -139,8 +129,6 @@ jobs:
         sudo make install
         sudo sed -i -e '/PROPOSAL_INCLUDE_DIR/s/\/include/\/usr\/include/' /usr/lib/x86_64-linux-gnu/cmake/PROPOSAL/PROPOSALConfig.cmake
         sudo sed -i -e '/PROPOSAL_LIBRARIES/s/\/lib/\/usr\/lib/' /usr/lib/x86_64-linux-gnu/cmake/PROPOSAL/PROPOSALConfig.cmake
-        cd ../../..
-        rm -rf proposal
 
     - name: Install Corsika 8
       continue-on-error: true
@@ -166,7 +154,7 @@ jobs:
       shell: bash
       run: |
         cat filelist_before.txt filelist_after.txt | sort | uniq -u > filelist_diff.txt
-        tar -zcvf corsika8_installed.tgz -C / -T filelist_diff.txt
+        sudo tar -zcvf corsika8_installed.tgz -C / -T filelist_diff.txt
         ls -l corsika8_installed.tgz
 
     - uses: actions/upload-artifact@v4
