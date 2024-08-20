@@ -40,7 +40,7 @@ jobs:
         sudo apt install -y -V libarrow-dev libarrow-dataset-dev libparquet-dev
         pip install pyarrow
 
-    - name: Build pre-installation file list
+    - name: Generate pre-installation file list
       shell: bash
       run: sudo find /usr -print > filelist_before.txt
 
@@ -145,10 +145,20 @@ jobs:
           -DCMAKE_PREFIX_PATH=/usr \
           ..
         make -j4
+
+    - name: Test Corsika 8
+      shell: bash
+      run: |
+        cd corsika/build
         make test
+
+    - name: Install Corsika 8
+      shell: bash
+      run: |
+        cd corsika/build
         sudo make install
 
-    - name: Build post-installation file list
+    - name: Generate post-installation file list
       shell: bash
       run: sudo find /usr -print > filelist_after.txt
 
