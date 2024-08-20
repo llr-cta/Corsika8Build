@@ -73,14 +73,14 @@ jobs:
         make -j4
         sudo make install
 
-    - name: Install catch2 library
+    - name: Install Catch2 library
       shell: bash
       run: |
-        mkdir catch2
-        cd catch2
+        mkdir Catch2
+        cd Catch2
         wget https://github.com/catchorg/Catch2/archive/refs/tags/v${{ env.catch2_version }}.tar.gz
         tar zxf v${{ env.catch2_version }}.tar.gz
-        cd catch2-${{ env.catch2_version }}
+        cd Catch2-${{ env.catch2_version }}
         mkdir build
         cd build
         cmake .. -DCMAKE_BUILD_TYPE=Release \
