@@ -11,6 +11,7 @@ env:
   spdlog_version: 1.14.1
   cubic_version: 0.1.5
   proposal_version: 7.6.2
+  catch2_version: 3.6.0
 
 jobs:
   build:
@@ -30,7 +31,7 @@ jobs:
         sudo apt-get update -y
         sudo apt-get install -y python3 python3-pip cmake g++ gfortran git doxygen graphviz \
             libboost-all-dev libcli11-dev libeigen3-dev libyaml-cpp-dev \
-            libre2-dev libzstd-dev liblz4-dev catch2 zlib1g-dev libprotobuf-dev \
+            libre2-dev libzstd-dev liblz4-dev zlib1g-dev libprotobuf-dev \
             nlohmann-json3-dev ca-certificates lsb-release wget
         wget https://apache.jfrog.io/artifactory/arrow/$(lsb_release --id --short | tr 'A-Z' 'a-z')/apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb
         sudo apt install -y ./apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb
@@ -65,6 +66,21 @@ jobs:
         wget https://github.com/gabime/spdlog/archive/refs/tags/v${{ env.spdlog_version }}.tar.gz
         tar zxf v${{ env.spdlog_version }}.tar.gz
         cd spdlog-${{ env.spdlog_version }}
+        mkdir build
+        cd build
+        cmake .. -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_INSTALL_PREFIX=/usr
+        make -j4
+        sudo make install
+
+    - name: Install catch2 library
+      shell: bash
+      run: |
+        mkdir catch2
+        cd catch2
+        wget https://github.com/catchorg/Catch2/archive/refs/tags/v${{ env.catch2_version }}.tar.gz
+        tar zxf v${{ env.catch2_version }}.tar.gz
+        cd catch2-${{ env.catch2_version }}
         mkdir build
         cd build
         cmake .. -DCMAKE_BUILD_TYPE=Release \
@@ -143,4 +159,5 @@ jobs:
         files: corsika8_installed.tgz
         name: "Build of CORSIKA 8 on ${{ matrix.os }}"
         tag_name: "${{ matrix.os }}"
+        body: Automated build of CORSIKA 8 and some dependencies
         prerelease: true
