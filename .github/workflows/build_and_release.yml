@@ -31,7 +31,7 @@ jobs:
       run: |
         sudo apt-get update -y
         sudo apt-get install -y python3 python3-pip cmake g++ gfortran git doxygen graphviz \
-            libboost-all-dev libcli11-dev libeigen3-dev libyaml-cpp-dev \
+            libboost-all-dev libcli11-dev libeigen3-dev \
             libre2-dev libzstd-dev liblz4-dev zlib1g-dev libprotobuf-dev \
             nlohmann-json3-dev ca-certificates lsb-release wget
         wget https://apache.jfrog.io/artifactory/arrow/$(lsb_release --id --short | tr 'A-Z' 'a-z')/apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb
