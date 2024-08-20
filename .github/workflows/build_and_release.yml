@@ -145,6 +145,7 @@ jobs:
           -DCMAKE_PREFIX_PATH=/usr \
           ..
         make -j4
+        make test
         sudo make install
 
     - name: Build post-installation file list
