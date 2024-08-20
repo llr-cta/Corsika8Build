@@ -146,12 +146,6 @@ jobs:
           ..
         make -j4
 
-    - name: Test Corsika 8
-      shell: bash
-      run: |
-        cd corsika/build
-        make test
-
     - name: Install Corsika 8
       shell: bash
       run: |
@@ -177,3 +171,9 @@ jobs:
         tag_name: "${{ matrix.os }}"
         body: Automated build of CORSIKA 8 and some dependencies
         prerelease: true
+
+    - name: Test Corsika 8
+      shell: bash
+      run: |
+        cd corsika/build
+        make test
