@@ -100,7 +100,7 @@ jobs:
         make -j4
         sudo make install
 
-    - name: Install Cubic Interpolation
+    - name: Install cubic_interpolation
       shell: bash
       run: |
         mkdir cubic_interpolation
