@@ -130,13 +130,17 @@ jobs:
         sudo sed -i -e '/PROPOSAL_INCLUDE_DIR/s/\/include/\/usr\/include/' /usr/lib/x86_64-linux-gnu/cmake/PROPOSAL/PROPOSALConfig.cmake
         sudo sed -i -e '/PROPOSAL_LIBRARIES/s/\/lib/\/usr\/lib/' /usr/lib/x86_64-linux-gnu/cmake/PROPOSAL/PROPOSALConfig.cmake
 
-    - name: Build Corsika 8
+    - name: Checkout and modify Corsika 8
       shell: bash
       run: |
         git clone --recursive https://gitlab.iap.kit.edu/AirShowerPhysics/corsika.git
         sed -i -e '/^find_package(Arrow/s/$/\nfind_package(Parquet REQUIRED)/' corsika/CMakeLists.txt
         sed -i -e '/^find_package(Boost/s/filesystem/filesystem math_tr1/' corsika/CMakeLists.txt
         sed -i -e 's/Boost::filesystem/Boost::filesystem Boost::math_tr1/' corsika/CMakeLists.txt        
+
+    - name: Configure Corsika 8
+      shell: bash
+      run: |
         mkdir corsika/build
         cd corsika/build
         cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo \
@@ -144,6 +148,11 @@ jobs:
           -DCMAKE_INSTALL_LIBDIR=x86_64-linux-gnu \
           -DCMAKE_PREFIX_PATH=/usr \
           ..
+
+    - name: Build Corsika 8
+      shell: bash
+      run: |
+        cd corsika/build
         make -j4
 
     - name: Install Corsika 8
