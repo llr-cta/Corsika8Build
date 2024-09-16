@@ -145,7 +145,7 @@ jobs:
         cd corsika/build
         cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo \
           -DCMAKE_INSTALL_PREFIX=/usr \
-          -DCMAKE_INSTALL_LIBDIR=x86_64-linux-gnu \
+          -DCMAKE_INSTALL_LIBDIR=lib/x86_64-linux-gnu \
           -DCMAKE_PREFIX_PATH=/usr \
           ..
 
