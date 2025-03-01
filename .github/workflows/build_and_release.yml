@@ -54,6 +54,7 @@ jobs:
         mkdir build
         cd build
         cmake .. -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE \
           -DCMAKE_INSTALL_PREFIX=/usr
         make -j4
         sudo make install
