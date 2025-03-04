@@ -69,6 +69,7 @@ jobs:
         mkdir build
         cd build
         cmake .. -DCMAKE_BUILD_TYPE=Release \
+          -DSPDLOG_BUILD_PIC=ON             \
           -DCMAKE_INSTALL_PREFIX=/usr
         make -j4
         sudo make install
