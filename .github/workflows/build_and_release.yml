@@ -154,6 +154,7 @@ jobs:
       run: |
         git clone --recursive https://gitlab.iap.kit.edu/AirShowerPhysics/corsika.git
         sed -i -e '/^find_package(Arrow/s/$/\nfind_package(Parquet REQUIRED)/' corsika/CMakeLists.txt
+        sed -i -e '/^find_package(Boost/s/Boost/Boost 1.85.0 EXACT/' corsika/CMakeLists.txt
         sed -i -e '/^find_package(Boost/s/filesystem/filesystem math_tr1/' corsika/CMakeLists.txt
         sed -i -e 's/Boost::filesystem/Boost::filesystem Boost::math_tr1/' corsika/CMakeLists.txt        
 
