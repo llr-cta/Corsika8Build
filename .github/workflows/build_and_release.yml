@@ -13,6 +13,7 @@ env:
   proposal_version: 7.6.2
   catch2_version: 3.6.0
   yaml-cpp_version: 0.8.0
+  boost_version: 1.85.0
 
 jobs:
   build:
@@ -43,6 +44,21 @@ jobs:
     - name: Generate pre-installation file list
       shell: bash
       run: sudo find /usr -print > filelist_before.txt
+
+    - name: Install BOOST
+      shell: bash
+      run: |
+        mkdir boost
+        cd boost
+        wget -qO - https://github.com/boostorg/boost/releases/download/boost-${{ env.boost_version }}/boost-${{ env.boost_version }}-cmake.tar.gz | tar zxf -
+        cd boost-${{ env.boost_version }}
+        mkdir build
+        cd build
+        cmake .. -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE \
+          -DCMAKE_INSTALL_PREFIX=/usr
+        make -j4
+        sudo make install
 
     - name: Install fmt library
       shell: bash
