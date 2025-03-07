@@ -52,7 +52,7 @@ jobs:
         cd boost
         wget -qO - https://github.com/boostorg/boost/releases/download/boost-${{ env.boost_version }}/boost-${{ env.boost_version }}-b2-nodocs.tar.gz | tar zxf -
         cd boost-${{ env.boost_version }}
-        ./bootstrap.sh
+        ./bootstrap.sh --prefix=/usr
         ./b2 -j4 stage
         sudo ./b2 install
 
