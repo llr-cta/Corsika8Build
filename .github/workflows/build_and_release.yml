@@ -43,7 +43,7 @@ jobs:
 
     - name: Generate pre-installation file list
       shell: bash
-      run: sudo find /usr -print > filelist_before.txt
+      run: sudo find /usr -type f -exec sha256sum {} + | sort > filelist_before.txt
 
     - name: Install BOOST
       shell: bash
@@ -179,12 +179,12 @@ jobs:
 
     - name: Generate post-installation file list
       shell: bash
-      run: sudo find /usr -print > filelist_after.txt
+      run: sudo find /usr -type f -exec sha256sum {} + | sort > filelist_after.txt
 
     - name: Package Corsika 8 and dependencies in TGZ file
       shell: bash
       run: |
-        cat filelist_before.txt filelist_after.txt | sort | uniq -u > filelist_diff.txt
+        diff before.txt after.txt | grep '>' | awk '{print $3}' > filelist_diff.txt
         sudo tar -zpcf corsika8_installed.tgz --ignore-failed-read -C / -T filelist_diff.txt
         ls -lh corsika8_installed.tgz
 
