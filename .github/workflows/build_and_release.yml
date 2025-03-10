@@ -184,7 +184,7 @@ jobs:
     - name: Package Corsika 8 and dependencies in TGZ file
       shell: bash
       run: |
-        diff filelist_before.txt filelist_after.txt | grep '>' | awk '{print $3}' > filelist_diff.txt
+        diff filelist_before.txt filelist_after.txt | grep '>' | awk '{print $3}' > filelist_diff.txt || true
         sudo tar -zpcf corsika8_installed.tgz --ignore-failed-read -C / -T filelist_diff.txt
         ls -lh corsika8_installed.tgz
 
