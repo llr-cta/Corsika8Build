@@ -43,7 +43,7 @@ jobs:
 
     - name: Generate pre-installation file list
       shell: bash
-      run: sudo find /usr -printf "%T@ %p\n" | sort > filelist_before.txt
+      run: sudo find /usr -type f -printf "%T@ %p\n" | sort > filelist_before.txt
 
     - name: Install BOOST
       shell: bash
@@ -179,7 +179,7 @@ jobs:
 
     - name: Generate post-installation file list
       shell: bash
-      run: sudo find /usr -printf "%T@ %p\n" | sort > filelist_after.txt
+      run: sudo find /usr -type f -printf "%T@ %p\n" | sort > filelist_after.txt
 
     - name: Package Corsika 8 and dependencies in TGZ file
       shell: bash
