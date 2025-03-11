@@ -14,6 +14,7 @@ env:
   catch2_version: 3.6.0
   yaml-cpp_version: 0.8.0
   boost_version: 1.85.0
+  particle_version: 0.25.1
 
 jobs:
   build:
@@ -40,6 +41,7 @@ jobs:
         sudo apt update -y
         sudo apt install -y -V libarrow-dev libarrow-dataset-dev libparquet-dev
         pip install pyarrow
+        pip install particle==${{ env.particle_version }}
 
     - name: Generate pre-installation file list
       shell: bash
