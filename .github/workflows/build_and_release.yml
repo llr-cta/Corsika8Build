@@ -156,6 +156,7 @@ jobs:
         sed -i -e '/^find_package(Boost/s/Boost/Boost ${{ env.boost_version }} EXACT/' corsika/CMakeLists.txt
         sed -i -e '/^find_package(Boost/s/filesystem/filesystem math_tr1/' corsika/CMakeLists.txt
         sed -i -e 's/Boost::filesystem/Boost::filesystem Boost::math_tr1/' corsika/CMakeLists.txt        
+        sed -i -r '/class DynamicInteractionProcess/{n;s/: InteractionProcess/: public InteractionProcess/}' corsika/framework/process/DynamicInteractionProcess.hpp
 
     - name: Configure Corsika 8
       shell: bash
